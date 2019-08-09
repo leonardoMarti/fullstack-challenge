@@ -4,7 +4,9 @@ const ObjectId = Schema.ObjectId;
 
 const schema = new Schema({
   id: { type: ObjectId },
-  url: { type: String }
+  hits: { type: Number },
+  url: { type: String },
+  shortUrl: { type: String }
 });
 
 const url = mongoose.model("url", schema);

@@ -1,13 +1,15 @@
 const urlController = require("../controllers/urlController");
 
 module.exports = function(app) {
-  app.get("/urls", async (req, res) => {
-    const urls = await urlController.getUrls();
-    res.send(urls);
-  });
+  app.get("/urls/:id", async (req, res) => {
+    const id = req.params.id;
+    const url = await urlController.getUrlById(id);
 
-  app.get("/urls/:id", (req, res) => {
-    res.send("/urls/:id");
+    if (!url) {
+      res.status(404);
+    }
+
+    res.redirect(url.url);
   });
 
   app.delete("/urls/:id", (req, res) => {
