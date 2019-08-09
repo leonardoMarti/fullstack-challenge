@@ -1,4 +1,11 @@
+const urlController = require("../controllers/urlController");
+
 module.exports = function(app) {
+  app.get("/urls", async (req, res) => {
+    const urls = await urlController.getUrls();
+    res.send(urls);
+  });
+
   app.get("/urls/:id", (req, res) => {
     res.send("/urls/:id");
   });
