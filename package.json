@@ -4,13 +4,14 @@
   "description": "linx fullstack challenge",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leonardoMarti/fullstack-challenge.git"
   },
-  "author": "",
+  "author": "Leonardo Martinelli Deves",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/leonardoMarti/fullstack-challenge/issues"
@@ -18,5 +19,8 @@
   "homepage": "https://github.com/leonardoMarti/fullstack-challenge#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
