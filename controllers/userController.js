@@ -12,6 +12,12 @@ async function createUser(params) {
   return user;
 }
 
+async function deleteUser(id) {
+  const remove = await userModel.findOneAndDelete({ id: id });
+  return remove;
+}
+
 module.exports = {
-  createUser
+  createUser,
+  deleteUser
 };

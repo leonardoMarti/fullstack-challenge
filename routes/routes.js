@@ -33,8 +33,11 @@ module.exports = function(app) {
     res.send("/users/:userId/stats");
   });
 
-  app.delete("/user/:userid", (req, res) => {
-    res.send("/urls/:id");
+  app.delete("/user/:userid", async (req, res) => {
+    const id = req.params.userid;
+    await userController.deleteUser(id);
+
+    res.status(200).send();
   });
 
   app.post("/user/:userid/urls", (req, res) => {
