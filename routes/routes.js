@@ -63,8 +63,11 @@ module.exports = function(app) {
     res.status(200).send();
   });
 
-  app.get("/stats/:id", (req, res) => {
-    res.send("/stats/:id");
+  app.get("/stats/:id", async (req, res) => {
+    const id = req.params.id;
+    const url = await urlController.getUrlById(id);
+
+    res.send(url);
   });
 
   app.get("/stats", async (req, res) => {
