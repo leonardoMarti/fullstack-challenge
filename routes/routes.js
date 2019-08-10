@@ -50,8 +50,10 @@ module.exports = function(app) {
     res.status(201).send(url);
   });
 
-  app.get("/users/:userId/stats", (req, res) => {
-    res.send("/users/:userId/stats");
+  app.get("/users/:userid/stats", async (req, res) => {
+    const id = req.params.userid;
+    const stats = await statsController.getUserStats(id);
+    res.send(stats);
   });
 
   app.delete("/user/:userid", async (req, res) => {

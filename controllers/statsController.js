@@ -19,6 +19,26 @@ async function getStats() {
   };
 }
 
+async function getUserStats(userId) {
+  const urls = await urlModel.find({ userId: userId });
+  let hits = 0;
+  const topUrls = await urlModel
+    .find({ userId: userId })
+    .sort({ hits: -1 })
+    .limit(10);
+
+  urls.forEach(url => {
+    hits = hits + url.hits;
+  });
+
+  return {
+    hits,
+    urlCount: urls.length,
+    topUrls
+  };
+}
+
 module.exports = {
-  getStats
+  getStats,
+  getUserStats
 };
