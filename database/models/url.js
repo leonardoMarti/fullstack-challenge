@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 const schema = new Schema({
-  id: { type: String },
   hits: { type: Number },
   url: { type: String },
-  shortUrl: { type: String }
+  shortUrl: { type: String },
+  userId: { type: String, ref: "user" }
 });
 
 const url = mongoose.model("url", schema);

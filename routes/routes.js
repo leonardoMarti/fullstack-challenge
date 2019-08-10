@@ -32,6 +32,20 @@ module.exports = function(app) {
     res.status(201).send(user);
   });
 
+  app.post("/user/:userid/urls", async (req, res) => {
+    const params = req.body;
+    const userId = req.params.userid;
+
+    const url = await urlController.createUrl(params, userId);
+
+    if (!url) {
+      res.status(404).send();
+      return;
+    }
+
+    res.status(201).send(url);
+  });
+
   app.get("/users/:userId/stats", (req, res) => {
     res.send("/users/:userId/stats");
   });
@@ -41,10 +55,6 @@ module.exports = function(app) {
     await userController.deleteUser(id);
 
     res.status(200).send();
-  });
-
-  app.post("/user/:userid/urls", (req, res) => {
-    res.send("/user/:userid/urls");
   });
 
   app.get("/stats", (req, res) => {
