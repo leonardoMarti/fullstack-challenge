@@ -13,7 +13,13 @@ function getUrlById(id) {
   return url;
 }
 
+async function deleteUrl(id) {
+  const remove = await urlModel.findOneAndDelete({ id: id });
+  return remove;
+}
+
 module.exports = {
   getUrls,
-  getUrlById
+  getUrlById,
+  deleteUrl
 };

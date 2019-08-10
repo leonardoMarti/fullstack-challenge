@@ -14,8 +14,11 @@ module.exports = function(app) {
     res.redirect(url.url);
   });
 
-  app.delete("/urls/:id", (req, res) => {
-    res.send("/urls/:id");
+  app.delete("/urls/:id", async (req, res) => {
+    const id = req.params.id;
+    await urlController.deleteUrl(id);
+
+    res.status(200).send();
   });
 
   app.post("/users", async (req, res) => {
