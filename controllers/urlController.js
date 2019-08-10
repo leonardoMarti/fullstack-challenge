@@ -9,21 +9,40 @@ async function getUrlById(id) {
   return url;
 }
 
+async function getUrlByShortUrl(shortUrl) {
+  const url = await urlModel.findOne({ shortUrl: shortUrl });
+  return url;
+}
+
 async function deleteUrl(id) {
   const remove = await urlModel.findOneAndDelete({ _id: id });
   return remove;
 }
 
-async function createUrl(params, userId) {
+function makeShortUrl(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+async function createUrl(params, userId, serverUrl) {
   const checkUser = await userModel.findOne({ id: userId });
 
   if (!checkUser) {
     return false;
   }
 
+  const random = makeShortUrl(5);
+
   const urlParams = {
     url: params.url,
-    userId: userId
+    userId: userId,
+    shortUrl: serverUrl + "/" + random
   };
 
   const urlData = new urlModel(urlParams);
@@ -43,5 +62,6 @@ module.exports = {
   getUrlById,
   deleteUrl,
   createUrl,
-  hitUrl
+  hitUrl,
+  getUrlByShortUrl
 };
