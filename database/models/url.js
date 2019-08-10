@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const schema = new Schema({
-  id: { type: ObjectId },
   hits: { type: Number },
   url: { type: String },
   shortUrl: { type: String }

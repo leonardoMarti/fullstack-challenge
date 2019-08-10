@@ -1,4 +1,5 @@
 const urlController = require("../controllers/urlController");
+const userController = require("../controllers/userController");
 
 module.exports = function(app) {
   app.get("/urls/:id", async (req, res) => {
@@ -6,7 +7,8 @@ module.exports = function(app) {
     const url = await urlController.getUrlById(id);
 
     if (!url) {
-      res.status(404);
+      res.status(404).send();
+      return;
     }
 
     res.redirect(url.url);
@@ -16,8 +18,15 @@ module.exports = function(app) {
     res.send("/urls/:id");
   });
 
-  app.post("/users", (req, res) => {
-    res.send("/users");
+  app.post("/users", async (req, res) => {
+    const user = await userController.createUser(req.body);
+
+    if (!user) {
+      res.status(409).send();
+      return;
+    }
+
+    res.status(201).send(user);
   });
 
   app.get("/users/:userId/stats", (req, res) => {
