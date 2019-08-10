@@ -1,24 +1,8 @@
 const urlController = require("../controllers/urlController");
 const userController = require("../controllers/userController");
+const statsController = require("../controllers/statsController");
 
 module.exports = function(app) {
-  app.get("/:shortUrl", async (req, res) => {
-    const serverUrl = req.protocol + "://" + req.get("host");
-    const shortUrl = req.params.shortUrl;
-    const url = await urlController.getUrlByShortUrl(
-      serverUrl + "/" + shortUrl
-    );
-
-    if (!url) {
-      res.status(404).send();
-      return;
-    }
-
-    await urlController.hitUrl(url._id);
-
-    res.redirect(url.url);
-  });
-
   app.get("/urls/:id", async (req, res) => {
     const id = req.params.id;
     const url = await urlController.getUrlById(id);
@@ -77,11 +61,29 @@ module.exports = function(app) {
     res.status(200).send();
   });
 
-  app.get("/stats", (req, res) => {
-    res.send("/stats");
-  });
-
   app.get("/stats/:id", (req, res) => {
     res.send("/stats/:id");
+  });
+
+  app.get("/stats", async (req, res) => {
+    const stats = await statsController.getStats();
+    res.send(stats);
+  });
+
+  app.get("/:shortUrl", async (req, res) => {
+    const serverUrl = req.protocol + "://" + req.get("host");
+    const shortUrl = req.params.shortUrl;
+    const url = await urlController.getUrlByShortUrl(
+      serverUrl + "/" + shortUrl
+    );
+
+    if (!url) {
+      res.status(404).send();
+      return;
+    }
+
+    await urlController.hitUrl(url._id);
+
+    res.redirect(url.url);
   });
 };
