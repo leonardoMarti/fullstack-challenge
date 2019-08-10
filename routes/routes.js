@@ -6,10 +6,7 @@ module.exports = function(app) {
     const id = req.params.id;
     const url = await urlController.getUrlById(id);
 
-    if (!url) {
-      res.status(404).send();
-      return;
-    }
+    await urlController.hitUrl(url._id);
 
     res.redirect(url.url);
   });

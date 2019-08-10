@@ -3,14 +3,9 @@ const ObjectId = mongoose.Types.ObjectId;
 const urlModel = require("../database/models/url");
 const userModel = require("../database/models/user");
 
-function getUrls() {
-  const urls = urlModel.find();
-  return urls;
-}
-
-function getUrlById(id) {
+async function getUrlById(id) {
   const param = new ObjectId(id);
-  const url = urlModel.findById(param);
+  const url = await urlModel.findById(param);
   return url;
 }
 
@@ -36,9 +31,17 @@ async function createUrl(params, userId) {
   return url;
 }
 
+async function hitUrl(id) {
+  const url = await urlModel.findOne({ _id: id });
+  url.hits = url.hits + 1;
+  await url.save();
+
+  return;
+}
+
 module.exports = {
-  getUrls,
   getUrlById,
   deleteUrl,
-  createUrl
+  createUrl,
+  hitUrl
 };
